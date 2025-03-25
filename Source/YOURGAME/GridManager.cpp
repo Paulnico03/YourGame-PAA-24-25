@@ -162,7 +162,7 @@ void AGridManager::GenerateSmartObstacles()
         Tile->SetAsObstacle();
     }
 
-    UE_LOG(LogTemp, Warning, TEXT("✅ Celle isolate convertite in ostacoli."));
+  //  UE_LOG(LogTemp, Warning, TEXT("✅ Celle isolate convertite in ostacoli."));
 }
 
 
@@ -185,3 +185,19 @@ TArray<AGridTile*> AGridManager::GetAdjacentTiles(AGridTile* Tile) const
 
     return Neighbors;
 }
+void AGridManager::HighlightMovableCells(int StartX, int StartY, int MaxDistance) {
+    for (AGridTile* Tile : AllGridTiles) {
+        if (!Tile) continue;
+
+        FVector2D TilePos = Tile->GetGridPosition();
+        int Distance = FMath::Abs(TilePos.X - StartX) + FMath::Abs(TilePos.Y - StartY);
+
+        if (Distance <= MaxDistance) {
+            Tile->SetHighlighted(true);
+        } else {
+            Tile->SetHighlighted(false);
+        }
+    }
+}
+
+

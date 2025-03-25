@@ -1,6 +1,8 @@
+//GridTile.h
 #pragma once
 
 #include "CoreMinimal.h"
+#include "UnitTypes.h"
 #include "GameFramework/Actor.h"
 #include "GridTile.generated.h"
 
@@ -39,11 +41,53 @@ public:
 
     UPROPERTY(EditAnywhere, Category = "Grid")
     UMaterialInterface* GridMaterial;
+    // Materiali delle unità
+    UPROPERTY(EditAnywhere, Category = "Materials")
+    UMaterialInterface* BrawlerMaterial;
+
+    UPROPERTY(EditAnywhere, Category = "Materials")
+    UMaterialInterface* SniperMaterial;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+    UStaticMeshComponent* MeshComponent;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Materials")
+    UMaterialInterface* DefaultMaterial;
+
+
+    UFUNCTION()
+    FVector2D GetGridPosition() const;
+    UPROPERTY()
+    int GridX;
+
+    void SetHighlighted(bool bHighlight);
+
+    UPROPERTY()
+    int GridY;
+
+
+    // Funzione per cambiare il materiale in base all'unità selezionata
+    void SetUnitMaterial(EUnitType UnitType);
+    
+    virtual void NotifyActorOnClicked(FKey ButtonPressed) override;
 
     UPROPERTY(EditAnywhere, Category = "Grid")
-    bool bIsObstacle = false; 
+    UMaterialInterface* HighlightMaterial;
 
+    UPROPERTY(EditAnywhere, Category = "Grid")
+    bool bIsObstacle = false;
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+    bool bIsHighlighted = false;
+    UPROPERTY(BlueprintReadWrite, EditAnywhere)
+    bool bIsBlocked = false;
+
+
+    void SetHighlight(bool bHighlight);
     void SetGridPosition(int32 X, int32 Y);
     void SetAsObstacle();
     void SetAsNormal();
+private:
+    bool bIsOccupied = false; // ✅ Controlla se la cella è già occupata
+
+    
 };

@@ -32,30 +32,46 @@ void UUIManager::NativeConstruct()
 
 void UUIManager::OnBrawlerSelected()
 {
-    UE_LOG(LogTemp, Warning, TEXT("🔥 Brawler Button Clicked!"));
-
     ATopDownGameMode* GameMode = Cast<ATopDownGameMode>(GetWorld()->GetAuthGameMode());
-    if (GameMode)
+    if (!GameMode) return;
+
+    if (GameMode->bBrawlerPlaced) // NON selected
     {
-        GameMode->SelectUnit(EUnitType::Brawler);
+        UE_LOG(LogTemp, Warning, TEXT("⚠️ Brawler già posizionato, non puoi sceglierlo di nuovo!"));
+        return;
     }
-    else
-    {
-        UE_LOG(LogTemp, Error, TEXT("❌ GameMode non trovato!"));
-    }
+
+    UE_LOG(LogTemp, Warning, TEXT("🔥 Brawler Button Clicked!"));
+    GameMode->SelectUnit(EUnitType::Brawler);
 }
 
 void UUIManager::OnSniperSelected()
 {
-    UE_LOG(LogTemp, Warning, TEXT("🔥 Sniper Button Clicked!"));
-
     ATopDownGameMode* GameMode = Cast<ATopDownGameMode>(GetWorld()->GetAuthGameMode());
-    if (GameMode)
+    if (!GameMode) return;
+
+    if (GameMode->bSniperPlaced)
     {
-        GameMode->SelectUnit(EUnitType::Sniper);
+        UE_LOG(LogTemp, Warning, TEXT("⚠️ Sniper già posizionato, non puoi sceglierlo di nuovo!"));
+        return;
     }
-    else
+
+    UE_LOG(LogTemp, Warning, TEXT("🔥 Sniper Button Clicked!"));
+    GameMode->SelectUnit(EUnitType::Sniper);
+}
+
+
+void UUIManager::DisableUnitSelection()
+{
+    if (BrawlerButton)
     {
-        UE_LOG(LogTemp, Error, TEXT("❌ GameMode non trovato!"));
+        BrawlerButton->SetIsEnabled(false); // Disabilita il pulsante del Brawler
+        UE_LOG(LogTemp, Warning, TEXT("🚫 BrawlerButton disabilitato!"));
+    }
+
+    if (SniperButton)
+    {
+        SniperButton->SetIsEnabled(false); // Disabilita il pulsante dello Sniper
+        UE_LOG(LogTemp, Warning, TEXT("🚫 SniperButton disabilitato!"));
     }
 }

@@ -1,3 +1,4 @@
+//GridManager.h
 #pragma once
 
 #include "CoreMinimal.h"
@@ -41,6 +42,15 @@ public:
 
     UPROPERTY(EditAnywhere, Category = "Grid")
     float TileSize = 105.0f;
+
+
+    void HighlightMovableCells(int StartX, int StartY, int MaxDistance);
+
+    UPROPERTY()
+    TArray<AGridTile*> AllGridTiles;
+
+
+
 
     UPROPERTY(EditAnywhere, Category = "Grid")
     float ObstaclePercentage = 20.0f;

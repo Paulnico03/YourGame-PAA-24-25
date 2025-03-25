@@ -22,6 +22,10 @@ public:
 	UPROPERTY(meta = (BindWidget))
 	UButton* SniperButton;
 
+	UFUNCTION(BlueprintCallable, Category = "UI")
+	void DisableUnitSelection();
+
+
 	UFUNCTION()
 	void OnBrawlerSelected();
 
